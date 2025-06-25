@@ -1,0 +1,25 @@
+stages:
+  - build
+
+build_and_push_frontend_image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+
+  script:
+    - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_TOKEN"
+    - docker build -t kimia75/kimia-frontend:latest ./ -f ./Dockerfile
+    - docker push kimia75/kimia-frontend:latest
+
+  only:
+    refs:
+      - frontend
+
+
+  before_script:
+    - echo "Starting build and push process..."
+
