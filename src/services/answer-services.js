@@ -4,11 +4,29 @@ import React from 'react';
 import {statusAnswers} from '../utils/utils';
 
 // signup user
-export function GetAllAnswersExtra(setData){
+export function GetAllAnswersExtra({setData,id}){
     const data = localStorage.getItem("signed-user");
     const jsonData = JSON.parse(data);
     const token = jsonData ? jsonData.token : "notFound";
-    return fetch("/api/answers/extra", {
+    return fetch(`/api/answers/users/${id}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`, //
+            "Content-Type": "application/json"
+        }
+    })
+        .then((res) => statusAnswers(res))
+        .then((data) => setData(data))
+        .catch((e) => {
+            console.log("Error fetching answers:", e);
+        });
+}
+
+export function GetAllAnswersExtraByDate({setData,id}){
+    const data = localStorage.getItem("signed-user");
+    const jsonData = JSON.parse(data);
+    const token = jsonData ? jsonData.token : "notFound";
+    return fetch(`/api/answers/users/${id}/AnswerByDate`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`, //

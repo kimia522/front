@@ -26,7 +26,7 @@ export function GetAllUsersforAdmin(setData){
     const data = localStorage.getItem("signed-user");
     const jsonData = JSON.parse(data);
     const token = jsonData ? jsonData.token : "notFound";
-    return fetch("/api/users/admins/getusers", {
+    return fetch("/api/users", {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,

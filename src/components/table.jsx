@@ -38,8 +38,14 @@ const columns = [
         align: 'center',
     },
     {
-        id: 'method',
+        id: 'transport_name',
         label: 'transport_name',
+        minWidth: 100,
+        align: 'center',
+    },
+    {
+        id: 'co2_emmission',
+        label: 'co2_emmission',
         minWidth: 100,
         align: 'center',
     },

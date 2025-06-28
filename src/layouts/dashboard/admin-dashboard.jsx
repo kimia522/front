@@ -65,10 +65,10 @@ const AdminDashboard = ()=>{
                 emission_factor: emissionfactor,
             };
             try {
-                await SetTransport({ setDataTransport, transportJson });
+                await SetTransport({ setData: setDataTransport, transportRegisterDTO: transportJson });
             } catch (error) {
-                console.error("Error setting answer:", error);
-            }finally {
+                console.error("Error setting transport:", error);
+            } finally {
                 setMethod("");
                 setEmissionfactor("");
                 setFuelAdjustment("");
@@ -78,6 +78,7 @@ const AdminDashboard = ()=>{
             alert("Please fill in all fields.");
         }
     };
+
     return(
         <Box sx={{width:'100vw',height:'auto',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',
             backgroundColor:`${theme.palette.primary.light}`, paddingTop:'5%'}}>

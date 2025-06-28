@@ -24,7 +24,6 @@ auth.propTypes = {
 }
 // authorize user
 export function auth({userLoginDTO}){
-    // console.log(`${API}`);
     return fetch(`/api/users/login`,{
         method: 'POST',
         headers: {

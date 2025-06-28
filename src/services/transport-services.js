@@ -79,24 +79,30 @@ export function DeleteTransportButKeepAnswers({setData,id}){
 
 }
 export function SetTransport({ setData, transportRegisterDTO }) {
-
     const data = localStorage.getItem("signed-user");
     const jsonData = JSON.parse(data);
     const token = jsonData ? jsonData.token : "notFound";
 
+    const headers = {
+        "Content-Type": "application/json"
+    };
+
+    if (token !== "notFound") {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    console.log(" Sending transportRegisterDTO to backend:", transportRegisterDTO);
+
     return fetch(`/api/transportmethods/create`, {
         method: "POST",
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(transportRegisterDTO) //
+        headers: headers,
+        body: JSON.stringify(transportRegisterDTO)
     })
-        .then((res) => res.json()) //
+        .then((res) => res.json())
         .then((data) => {
             setData(data);
         })
         .catch((e) => {
-            console.error("Error setting answer:", e);
+            console.error("Error setting transport:", e);
         });
 }

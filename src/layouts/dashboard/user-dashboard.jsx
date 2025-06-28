@@ -26,6 +26,7 @@ const UserDashboard = ()=>{
 
     const [age, setAge] = React.useState('');
     const [data,setData] = useState('');
+    const [co2Emmission,setCo2Emmission] = useState('');
     const [datatransport,setDataTransport] = useState('');
 
     //
@@ -40,9 +41,13 @@ const UserDashboard = ()=>{
     useEffect(()=>{
         if(AuthD){
             const getData = async () => {
-                const data = await GetAllAnswersExtra(setData);
+                const data = await GetAllAnswersExtra({setData, id:AuthD.id});
             }
             getData();
+            const getDataCo2Emmission = async () => {
+                const data = await GetAllAnswersExtra({setData:setCo2Emmission, id:AuthD.id});
+            }
+            getDataCo2Emmission();
             const getDataTransport = async () => {
                 const data = await GetAllTransports(setDataTransport);
             }
@@ -96,11 +101,11 @@ const UserDashboard = ()=>{
                 <Typography variant={"h4"}>Welcome {AuthD && (AuthD.lastname.charAt(0).toUpperCase() + AuthD.lastname.slice(1).toLowerCase())}</Typography>
                 <Typography variant={"title"}>Your CO2 Footprint Summary</Typography>
                 <Box sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                    <Box sx={{marginLeft:'10%',marginRight:'0'}}><ActionAreaCard props={{text:'Daily',value:'25%'}}/></Box>
+                    <Box sx={{marginLeft:'10%',marginRight:'0'}}><ActionAreaCard props={{text:'Daily',value:co2Emmission && co2Emmission.DailyCo2 }}/></Box>
                     <Box sx={{width:'20%'}}/>
-                    <Box sx={{width:'auto'}}><ActionAreaCard props={{text:'Monthly',value:'15%'}}/></Box>
+                    <Box sx={{width:'auto'}}><ActionAreaCard props={{text:'Monthly',value:co2Emmission && co2Emmission.MonthlyCo2 }}/></Box>
                     <Box sx={{width:'20%'}}/>
-                    <Box sx={{marginRight:'10%',width:'auto'}}><ActionAreaCard props={{text:'Yearly',value:'7%'}}/></Box>
+                    <Box sx={{marginRight:'10%',width:'auto'}}><ActionAreaCard props={{text:'Yearly',value:co2Emmission && co2Emmission.YearlyCo2 }}/></Box>
                 </Box>
             </Box>
             <Box sx={{width:'100%',height:'55%', marginTop:'10px', alignItems:'center', justifyContent:'center', display:'flex', flexDirection:'column'}}>
